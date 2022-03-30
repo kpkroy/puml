@@ -1,6 +1,26 @@
 import argparse
 
 
+class DBDownloadArgs:
+    def __init__(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--from_date", type=str, help="for stock & db. query start date in YYYY-MM-DD", default="2022-02-01")
+        parser.add_argument("--to_date", type=str, help="for stock & db. query start date in YYYY-MM-DD", default="2022-02-28")
+        parser.add_argument("--uid", type=str, help="for stock & db. person id", default="")
+        parser.add_argument("--pool_file", type=str, help="for stock & db. csv pool file name", default="high_sample.csv")
+        parser.add_argument("--query", type=str, help="if db. custom query", default="")
+        self.args = parser.parse_args()
+
+    def get_query_info(self) -> dict:
+        query_info = {'from_date': self.args.from_date,
+                      'to_date': self.args.to_date,
+                      'uid': self.args.uid,
+                      'pool_file': self.args.pool_file,
+                      'custom_q': self.args.query}
+
+        return query_info
+
+
 class ProfilerArgs:
     def __init__(self):
         parser = argparse.ArgumentParser()
