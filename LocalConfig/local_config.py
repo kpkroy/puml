@@ -13,9 +13,8 @@ class LocalConfig:
         self.config_file_path = None
         self.root_path = None
 
-    def configure_all(self, use_date) -> configparser.ConfigParser():
+    def configure_all(self, use_date="") -> configparser.ConfigParser():
         self.configure_parent_path()
-
         self.configure_date(use_date)
         self.configure_path()
         self.configure_file_name()
@@ -53,13 +52,16 @@ class LocalConfig:
     def configure_path(self):
         self.config_parser['path'] = {'work': self.work_path,
                                       'date': os.path.join(self.work_path, self.date),
-                                      'pool': os.path.join(self.work_path, 'pool')
+                                      'pool': os.path.join(self.work_path, 'pool'),
+                                      'log': os.path.join(self.work_path, 'log'),
+                                      'syrup': os.path.join(self.work_path, 'syrup'),
+                                      'visual': os.path.join(self.work_path, 'visual'),
+                                      'tempDb': os.path.join(self.work_path, 'tempDb'),
+                                      'demo_data': os.path.join(self.work_path, 'demo_data')
                                       }
 
     def configure_file_name(self):
-        self.config_parser['file'] = {'tran': 'transaction.csv',
-                                      'userDemo': 'demo.csv',
-                                      'labeled': 'transaction_label.csv',
+        self.config_parser['file'] = {'labeled': 'transaction_label.csv',
                                       'profiled': 'profile_label.csv',
                                       }
 

@@ -5,12 +5,12 @@ logging.basicConfig(format='%(asctime)s %(message)s - {%(name)s} {%(funcName)s}'
 
 
 class LogHandler:
-    def __init__(self, date_path=None):
-        if date_path is None:
+    def __init__(self, output_path=None):
+        if output_path is None:
             self.logger_output = os.getcwd()
         else:
             conf: configparser.ConfigParser()
-            self.logger_output = date_path
+            self.logger_output = output_path
         self.formatter = logging.Formatter('%(asctime)s %(message)s - (%(name)s || %(funcName)s)', datefmt='%H:%M:%S')
         self.logger = logging.getLogger('labeler')
         self.logger.setLevel('INFO')

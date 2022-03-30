@@ -4,21 +4,25 @@ import argparse
 class DBDownloadArgs:
     def __init__(self):
         parser = argparse.ArgumentParser()
-        parser.add_argument("--from_date", type=str, help="for stock & db. query start date in YYYY-MM-DD", default="2022-02-01")
-        parser.add_argument("--to_date", type=str, help="for stock & db. query start date in YYYY-MM-DD", default="2022-02-28")
-        parser.add_argument("--uid", type=str, help="for stock & db. person id", default="")
-        parser.add_argument("--pool_file", type=str, help="for stock & db. csv pool file name", default="high_sample.csv")
-        parser.add_argument("--query", type=str, help="if db. custom query", default="")
+        parser.add_argument("--from_date", type=str, help="query start date in YYYY-MM-DD", default="2022-02-01")
+        parser.add_argument("--to_date", type=str, help=" query start date in YYYY-MM-DD", default="2022-02-28")
+        parser.add_argument("--query", type=str, help="custom query", default="")
+        parser.add_argument("--uid", type=str, help="person id", default="5a7eba8617477c814f067302c7841c1e")
+        parser.add_argument("--pool_file", type=str, help="csv pool file name", default="high_sample.csv")
         self.args = parser.parse_args()
 
-    def get_query_info(self) -> dict:
-        query_info = {'from_date': self.args.from_date,
-                      'to_date': self.args.to_date,
-                      'uid': self.args.uid,
-                      'pool_file': self.args.pool_file,
-                      'custom_q': self.args.query}
+    def get_query_info(self):
+        return {'from_date': self.args.from_date,
+                'to_date': self.args.to_date,
+                'query': self.args.query,
+                'uid': self.args.uid}
 
-        return query_info
+    def get_pool_file(self):
+        return self.args.pool_file
+
+    def get_db_file_prefix(self) -> str:
+        return f'{self.args.from_date}-{self.args.to_date}'
+
 
 
 class ProfilerArgs:
