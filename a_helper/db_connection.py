@@ -37,7 +37,7 @@ class DbConnection:
         self.logger.info(f'> Fetched : {len(fetch_result)}')
         return fetch_result
 
-    def save_to_local_sql(self, sql_query_list, file_path, file_name):
+    def save_to_local_sql(self, sql_query_list: list, file_path: str, file_name: str):
         conn = sqlite3.connect(os.path.join(file_path, file_name))
 
         for sql_query in sql_query_list:

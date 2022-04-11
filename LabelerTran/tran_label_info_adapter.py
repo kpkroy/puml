@@ -1,18 +1,16 @@
 from LocalConfig.log_handler import LogHandler
 
 
-class TranLabelAdapter:
+class AdapterTranLabelGS:
     def __init__(self, lha=None):
         if lha:
             self.lh = lha
         else:
             self.lh = LogHandler()
         self.logger = self.lh.get_logger(__name__)
-        self.label_id = 0
 
     def adapt(self, line_data) -> dict:
-        self.label_id += 1
-        label_adapted = {'label_id': self.label_id,
+        label_adapted = {
                          'label_name': line_data.get('label_name'),
                          'keyword': line_data.get('keyword'),
                          'category_code': line_data.get('category_code'),
@@ -45,7 +43,7 @@ class TranLabelAdapter:
                 if amount_min == amount_max:
                     amount_exact = float_amount_min
             except:
-                self.logger.exception(f'>>amount conversion failed at id {self.label_id} : min[{amount_min}] | amount max [{amount_max}]')
+                self.logger.exception(f'>>amount conversion failed at {line_data.get("label_name")}: min[{amount_min}] | amount max [{amount_max}]')
                 is_ignore_amount = True
 
         return {'amount_min': float_amount_min,
@@ -70,7 +68,7 @@ class TranLabelAdapter:
                 pay_at_min = int(at_min)
                 pay_at_max = int(at_max)
             except:
-                self.logger.exception(f'>> at conversion failed at id {self.label_id} : min[{at_min}] | max [{at_max}]')
+                self.logger.exception(f'>> at conversion failed at id {line_data.get("label_name")} : min[{at_min}] | max [{at_max}]')
                 is_ignore_pay_at = True
 
         return {'pay_at_min': pay_at_min,

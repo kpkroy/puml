@@ -5,8 +5,9 @@ from pathlib import Path
 
 
 class LocalConfig:
-    def __init__(self, data_dir_name='ProfileData'):
+    def __init__(self, project_name='profiler', data_dir_name='ProfileData'):
         self.config_parser = configparser.ConfigParser()
+        self.project_name = project_name
         self.data_dir_name = data_dir_name
         self.date = None
         self.work_path = None
@@ -25,7 +26,7 @@ class LocalConfig:
 
     def configure_parent_path(self):
         # file path setting
-        self.find_project_root_folder('label')
+        self.find_project_root_folder()
         config_path = os.path.join(self.root_path, 'LocalConfig')
         self.config_file_path = os.path.join(config_path, 'config_file.ini')
         parent_path = Path(self.root_path).parent
@@ -54,7 +55,7 @@ class LocalConfig:
                                       'date': os.path.join(self.work_path, self.date),
                                       'pool': os.path.join(self.work_path, 'pool'),
                                       'log': os.path.join(self.work_path, 'log'),
-                                      'syrup': os.path.join(self.work_path, 'syrup'),
+                                      'downloadedDb': os.path.join(self.work_path, 'downloadedDb'),
                                       'visual': os.path.join(self.work_path, 'visual'),
                                       'tempDb': os.path.join(self.work_path, 'tempDb'),
                                       'demo_data': os.path.join(self.work_path, 'demo_data')
@@ -75,7 +76,7 @@ class LocalConfig:
             if not os.path.exists(self.config_parser['path'].get(x)):
                 os.mkdir(self.config_parser['path'].get(x))
 
-    def find_project_root_folder(self, root_folder_name):
+    def find_project_root_folder(self):
         max_search_count = 5
         count = 0
         is_found = True
@@ -84,7 +85,7 @@ class LocalConfig:
         prev_path = os.getcwd()
         while count < max_search_count and is_found:
             count += 1
-            if root_folder_name in current_path:
+            if self.project_name in current_path:
                 is_found = True
                 prev_path = current_path
                 current_path = os.path.abspath(Path(current_path).parent)

@@ -1,8 +1,9 @@
-from Adapters import tran_value_adapter as tva
+from a_helper import tran_value_adapter as tva
 
 
-class TranAdapter:
+class AdaptedTran:
     def __init__(self, tran: dict):
+        self.tran = tran
         self.person_id = tran.get('person_id')
         self.id = tran.get('id')
         self.pay_date = tran.get('pay_date')
@@ -16,6 +17,9 @@ class TranAdapter:
         self.cate_mid = tran.get('category_medium_id')
         self.cate_sid = tran.get('category_small_id')
         self.has_category = self.check_category_code()
+
+    def get_ori(self):
+        return self.tran
 
     def check_category_code(self):
         if self.get_category_code in {'101010', '841010'}:

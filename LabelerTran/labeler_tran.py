@@ -1,5 +1,5 @@
-from Adapters.tran_adapter import TranAdapter
-from LabelType.tran_label_info import TranLabelInfo
+from Transaction.adapted_tran import AdaptedTran
+from LabelerTran.tran_label_info import TranLabelInfo
 
 
 class TranLabeler:
@@ -37,21 +37,21 @@ class TranLabeler:
         if keyword or category_code:
             self.label_id_table[self.label_count] = new_label
 
-    def find_cate_labels(self, t: TranAdapter) -> list:
+    def find_cate_labels(self, t: AdaptedTran) -> list:
         found_cate = self.cate_table.get(t.get_category_code())
         if found_cate:
             return found_cate
         else:
             return []
 
-    def find_keyword_labels(self, t: TranAdapter) -> list:
+    def find_keyword_labels(self, t: AdaptedTran) -> list:
         key_matching_list = []
         for (key, value) in self.keyword_table.items():
             if key in t.get_merged_keyword():
                 key_matching_list.extend(value)
         return key_matching_list
 
-    def sort_labels(self, initial_match, t: TranAdapter) -> set:
+    def sort_labels(self, initial_match, t: AdaptedTran) -> set:
         if not initial_match:
             return set()
         label_id_set = set(initial_match)
@@ -66,7 +66,7 @@ class TranLabeler:
                 found_label_name.add(label_info.get_name())
         return found_label_name
 
-    def find_labels(self, t: TranAdapter) -> set:
+    def find_labels(self, t: AdaptedTran) -> set:
         initial_match = []
         initial_match.extend(self.find_cate_labels(t))
         initial_match.extend(self.find_keyword_labels(t))

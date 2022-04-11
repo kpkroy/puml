@@ -1,7 +1,8 @@
-from LocalConfig.arg_parse import DBDownloadArgs
 from LocalConfig.local_config import LocalConfig
-from TransactionDownload.query_helper import QueryHelper
-from TransactionDownload.db_connection import DbConnection
+from a_helper.query_helper import QueryHelper
+from a_helper.db_connection import DbConnection
+from LocalConfig.arg_parse import DBDownloadArgs
+from Transaction.pool import Pool
 from LocalConfig.log_handler import LogHandler
 
 
@@ -15,14 +16,13 @@ class DownloadFromDB:
         self.tran_file_name = f_name
         self.tran_file_path = f_path
 
-    def download(self, query_info, p_path, p_file_name):
+    def download(self, query_info, pool_id_list):
         qh = QueryHelper()
-        query_list = qh.create_query_list(query_info, p_path, p_file_name)
+        query_list = qh.create_query_list(query_info, pool_id_list)
         db = DbConnection(self.lh)
         db.connect()
         db.save_to_local_sql(query_list, self.tran_file_path, self.tran_file_name)
         db.close()
-        return p_file_name
 
 
 if __name__ == '__main__':
@@ -34,9 +34,7 @@ if __name__ == '__main__':
     file_name = f'{args.get_db_file_prefix()}-{date}.db'
     file_path = conf['path']['tempDb']
 
-    tf = DownloadFromDB(file_path, file_name)
-    pool_path = conf['path']['pool']
-    pool_file_name = args.get_pool_file()
-
-    tf.download(args.get_query_info(), pool_path, pool_file_name)
+    downloader = DownloadFromDB(file_path, file_name)
+    pm = Pool(args.get_pool_id_list(), conf['path']['pool'], args.get_pool_file())
+    downloader.download(args.get_query_info(), pm.get_user_id_list())
 

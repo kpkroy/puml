@@ -1,4 +1,4 @@
-from Adapters.tran_adapter import TranAdapter
+from Transaction.adapted_tran import AdaptedTran
 
 
 class TranLabelInfo:
@@ -40,7 +40,7 @@ class TranLabelInfo:
     def test_currency(self, t) -> bool:
         pass
 
-    def check_conditions(self, t: TranAdapter) -> bool:
+    def check_conditions(self, t: AdaptedTran) -> bool:
         if self.test_amount(t) is False:
             return False
         if self.test_pay_at(t) is False:
