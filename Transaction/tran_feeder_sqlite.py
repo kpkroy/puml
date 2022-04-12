@@ -6,13 +6,7 @@ import os
 
 
 class TransactionFeederSQLite(TransactionFeeder):
-    def __init__(self,
-                 from_date,
-                 to_date,
-                 table_name,
-                 uid_list: list,
-                 source_path, source_file, lha=None):
-
+    def __init__(self, from_date, to_date, table_name, uid_list: list, source_path, source_file, lha=None):
         super().__init__(lha)
         self.query_info = {'from_date': from_date,
                            'to_date': to_date,
