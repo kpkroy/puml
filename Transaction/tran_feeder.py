@@ -1,10 +1,17 @@
+from a_LocalConfig.log_handler import LogHandler
+from Transaction.adapted_tran import AdaptedTran
+from abc import abstractmethod
 from abc import ABC
 
 
-class TranFeeder(ABC):
-    def __init__(self):
-        self.query_info = {}
-        self.uid_list = []
-        self.source_path = ''
-        self.source_file = ''
-        self.qh = QueryHelper()
+class TransactionFeeder(ABC):
+    def __init__(self, lha=None):
+        if lha:
+            self.lh = lha
+        else:
+            self.lh = LogHandler()
+        self.logger = self.lh.get_logger(__name__)
+
+    @abstractmethod
+    def generate(self) -> [AdaptedTran]:
+        pass

@@ -29,9 +29,9 @@ if __name__ == '__main__':
     logger = lh.get_logger('profiler').info('> start profiling ')
 
     prod_url = 'https://docs.google.com/spreadsheets/d/17qBpAYLUT5YaujniLpxWKd9cPCW_xHQ8X-OPShjiEgs/edit#gid=0'
-    adapter_type = 'prod'
+    label_adapter_type = 'prod'
     tc = TranLabelerCreator()
-    prod_labeler = tc.create(prod_url, adapter_type)
+    prod_labeler = tc.create(prod_url, label_adapter_type)
     prod_labeler: TranLabeler
 
     label_result = []
