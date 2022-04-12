@@ -22,12 +22,15 @@ class TransactionFeederSQLite(TransactionFeeder):
         self.source_file = source_file
         self.qh = QueryHelperSQLite()
 
-    def generate(self) -> [AdaptedTran]:
+    def get_cursor(self):
         conn = sqlite3.connect(os.path.join(self.source_path, self.source_file))
         conn.row_factory = sqlite3.Row
-        cur = conn.cursor()
+        return conn.cursor()
 
+    def generate(self) -> [AdaptedTran]:
+        cur = self.get_cursor()
         query_list = self.qh.create_query_list_by_month(self.query_info, self.uid_list)
+
         for query in query_list:
             self.logger.info(f'> Fetching : {query}')
             cur.execute(query)
