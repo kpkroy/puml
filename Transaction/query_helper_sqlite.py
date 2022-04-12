@@ -1,9 +1,11 @@
+from Transaction.query_helper import QueryHelper
 import datetime
 from dateutil import relativedelta
 
 
-class QueryHelper:
-    def __init__(self):
+class QueryHelperSQLite(QueryHelper):
+    def __init__(self, lh=None):
+        super().__init__(lh)
         self.default_columns = ['person_id', 'id', 'pay_year', 'pay_month', 'pay_hour',
                                 'pay_day_of_week', 'ori_amount', 'installment_count',
                                 'keyword_sms', 'currency_code', 'dw_type', 'fin_id', 'is_cancel_matched',
@@ -13,9 +15,14 @@ class QueryHelper:
                                 'franchise_id', 'franchise_name', 'is_deleted', 'create_date']
 
     @staticmethod
-    def get_query_pay_month(f_date, t_date) -> []:
-        from_date = datetime.datetime.strptime(f_date, '%Y-%m-%d')
-        to_date = datetime.datetime.strptime(t_date, '%Y-%m-%d')
+    def get_query_pay_month(fd, td) -> []:
+        from_date = datetime.datetime.strptime(fd, '%Y-%m-%d')
+
+        if not td:
+            return [from_date.strftime('%Y-%m-%d')]
+        else:
+            to_date = datetime.datetime.strptime(td, '%Y-%m-%d')
+
         if from_date == to_date:
             return [from_date.strftime('%Y-%m-%d')]
         else:
@@ -36,14 +43,9 @@ class QueryHelper:
 
         for pm in pay_month:
             if person_id_list:
-                for p in person_id_list:
-                    yield self.create_query_by_month(pm, table_name, p)
+                for person_id in person_id_list:
+                    yield 'SELECT ' + ', '.join(self.default_columns) + ' FROM ' + table_name + f" WHERE person_id = '{person_id}' AND pay_month = '{pay_month}' "
             else:
-                yield ['SELECT ' + ', '.join(self.default_columns) +
-                        ' FROM ' + table_name + f" WHERE pay_month = '{pm}' limit 3000"]
+                yield 'SELECT ' + ', '.join(self.default_columns) + ' FROM ' + table_name + f" WHERE pay_month = '{pm}' limit 3000"
 
-    def create_query_by_month(self, pay_month, table_name, user_id):
-        return 'SELECT ' + ', '.join(self.default_columns) + \
-                ' FROM ' + table_name + \
-                f" WHERE person_id = '{user_id}' AND pay_month = '{pay_month}'"
 

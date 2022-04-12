@@ -2,7 +2,7 @@ import psycopg2
 import pandas.io.sql as psql
 import sqlite3
 from psycopg2.extras import RealDictCursor
-from LocalConfig.log_handler import LogHandler
+from a_LocalConfig.log_handler import LogHandler
 import os
 
 

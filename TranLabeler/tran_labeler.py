@@ -1,5 +1,5 @@
 from Transaction.adapted_tran import AdaptedTran
-from LabelerTran.tran_label_info import TranLabelInfo
+from TranLabeler.tran_label_info import TranLabelInfo
 
 
 class TranLabeler:

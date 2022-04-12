@@ -5,7 +5,7 @@ class DBDownloadArgs:
     def __init__(self):
         parser = argparse.ArgumentParser()
         parser.add_argument("--from_date", type=str, help="query start date in YYYY-MM-DD", default="2022-02-01")
-        parser.add_argument("--to_date", type=str, help=" query start date in YYYY-MM-DD", default="2022-02-28")
+        parser.add_argument("--to_date", type=str, help=" query start date in YYYY-MM-DD", default="")
         parser.add_argument("--query", type=str, help="custom query", default="")
         parser.add_argument("--uid", type=str, help="person id. separate by comma",
                             default="5a7eba8617477c814f067302c7841c1e")
@@ -20,50 +20,11 @@ class DBDownloadArgs:
     def get_pool_id_list(self):
         return self.args.uid.split(',')
 
-
     def get_pool_file(self):
         return self.args.pool_file
 
     def get_db_file_prefix(self) -> str:
         return f'{self.args.from_date}-{self.args.to_date}'
-
-
-class TranLabelerArgs:
-    def __init__(self):
-        parser = argparse.ArgumentParser()
-        parser.add_argument("--work_date", type=str, help="work date YYYY-MM-DD. "
-                                                          "\n Empty for previous date. 'renew' to create new working date.",
-                            default="")
-        parser.add_argument("--db_path", type=str, help="downloadedDb, tempDb. choose one", default="downloadedDb")
-        parser.add_argument("--db_file", type=str, help="file name of db", default="syrup-part1.db")
-        parser.add_argument("--from_date", type=str, help="for stock & db. query start date in YYYY-MM-DD", default="2022-02-01")
-        parser.add_argument("--to_date", type=str, help="for stock & db. query start date in YYYY-MM-DD", default="2022-02-28")
-        parser.add_argument("--uid", type=str, help="for stock & db. person id", default="")
-        parser.add_argument("--pool_file", type=str, help="for stock & db. csv pool file name", default="high_sample.csv")
-        parser.add_argument("--query", type=str, help="if db. custom query", default="")
-        self.args = parser.parse_args()
-
-    def get_db_path(self):
-        return self.args.db_path
-
-    def get_db_file(self):
-        return self.args.db_file
-
-    def get_working_date(self) -> str:
-        return self.args.work_date
-
-    def get_from_date(self):
-        return self.args.from_date
-
-    def get_to_date(self):
-        return self.args.to_date
-
-    def get_pool_id_list(self):
-        return self.args.uid.split(',')
-
-    def get_pool_file(self):
-        return self.args.pool_file
-
 
     '''
     def get_arg_parse() -> dict:

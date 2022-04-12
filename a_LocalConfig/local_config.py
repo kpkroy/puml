@@ -27,7 +27,7 @@ class LocalConfig:
     def configure_parent_path(self):
         # file path setting
         self.find_project_root_folder()
-        config_path = os.path.join(self.root_path, 'LocalConfig')
+        config_path = os.path.join(self.root_path, 'a_LocalConfig')
         self.config_file_path = os.path.join(config_path, 'config_file.ini')
         parent_path = Path(self.root_path).parent
         self.work_path = os.path.join(parent_path, self.data_dir_name)
@@ -98,7 +98,7 @@ class LocalConfig:
 
 
 if __name__ == '__main__':
-    from LocalConfig.arg_parse import ProfilerArgs
+    from a_LocalConfig.arg_parse import ProfilerArgs
 
     ap = ProfilerArgs()
     lc = LocalConfig()

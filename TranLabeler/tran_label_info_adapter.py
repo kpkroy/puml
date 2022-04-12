@@ -1,7 +1,7 @@
-from LocalConfig.log_handler import LogHandler
+from a_LocalConfig.log_handler import LogHandler
 
 
-class AdapterTranLabelGS:
+class AdapterTranLabelProd:
     def __init__(self, lha=None):
         if lha:
             self.lh = lha
@@ -51,7 +51,7 @@ class AdapterTranLabelGS:
                 'amount_exact': amount_exact,
                 'is_ignore_amount': is_ignore_amount}
 
-    def process_pay_at(self, line_data):
+    def process_pay_at(self, line_data) -> dict:
         # line_data : each transaction label condition
         at_min = line_data.get('pay_at_min')
         at_max = line_data.get('pay_at_max')

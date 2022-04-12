@@ -1,9 +1,9 @@
-from LocalConfig.local_config import LocalConfig
-from a_helper.query_helper import QueryHelper
+from a_LocalConfig.local_config import LocalConfig
+from Transaction.query_helper_sqlite import QueryHelper
 from a_helper.db_connection import DbConnection
-from LocalConfig.arg_parse import DBDownloadArgs
+from a_LocalConfig.arg_parse import DBDownloadArgs
 from Transaction.pool import Pool
-from LocalConfig.log_handler import LogHandler
+from a_LocalConfig.log_handler import LogHandler
 
 
 class DownloadFromDB:

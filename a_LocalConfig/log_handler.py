@@ -1,4 +1,4 @@
-from LocalConfig.local_config import configparser
+from a_LocalConfig.local_config import configparser
 import os
 import logging
 logging.basicConfig(format='%(asctime)s %(message)s - {%(name)s} {%(funcName)s}', datefmt='%H:%M:%S')

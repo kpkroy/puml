@@ -1,4 +1,4 @@
-from LocalConfig.local_config import LocalConfig
+from a_LocalConfig.local_config import LocalConfig
 import gzip
 import os
 import pandas
