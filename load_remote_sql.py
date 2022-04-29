@@ -18,7 +18,7 @@ class DownloadFromDB:
 
     def download(self, query_info, pool_id_list):
         qh = QueryHelper()
-        query_list = qh.create_query_list(query_info, pool_id_list)
+        query_list = qh.create_query_list_by_month(query_info, pool_id_list)
         db = DbConnection(self.lh)
         db.connect()
         db.save_to_local_sql(query_list, self.tran_file_path, self.tran_file_name)

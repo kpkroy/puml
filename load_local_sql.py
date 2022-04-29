@@ -5,14 +5,18 @@ import pandas
 import sqlite3
 
 
-def get_valid_file_list(dir_path, file_has_string):
-    if file_has_string:
-        return [y for y in os.listdir(dir_path)
-                if os.path.isfile(os.path.join(dir_path, y))
-                and file_has_string in y]
-    else:
-        return [y for y in os.listdir(dir_path)
-                if os.path.isfile(os.path.join(dir_path, y))]
+class LocalDB:
+    def __init__(self, fp):
+        self.dir_path = dir
+
+    def get_valid_file_list(self, dir_path, file_has_string):
+        if file_has_string:
+            return [y for y in os.listdir(dir_path)
+                    if os.path.isfile(os.path.join(dir_path, y))
+                    and file_has_string in y]
+        else:
+            return [y for y in os.listdir(dir_path)
+                    if os.path.isfile(os.path.join(dir_path, y))]
 
 
 if __name__ == '__main__':
