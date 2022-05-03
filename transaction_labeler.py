@@ -1,7 +1,7 @@
 from a_LocalConfig.local_config import LocalConfig
 from a_LocalConfig.log_handler import LogHandler
 from Transaction.pool import Pool
-from TranLabeler.tran_labeler_creator import TranLabelerCreator
+from TranLabeler.tran_labeler_main import TranLabelerCreator
 from Transaction.tran_feeder_sqlite import TransactionFeeder
 from TranLabeler.tran_labeler import TranLabeler
 
@@ -19,9 +19,8 @@ def setup_environment():
 
 
 if __name__ == '__main__':
-    pa = TranLabelerArgs()
     lc = LocalConfig('profiler')
-    conf = lc.configure_all(use_date=pa.get_working_date())
+    conf = lc.configure_all()
     lh = LogHandler(conf['path']['date'])
     logger = lh.get_logger('profiler').info('> start profiling ')
     setup_environment()
