@@ -1,0 +1,26 @@
+@startuml
+
+class InputTransaction extends InputType
+class InputTwoLayer extends InputType
+
+class InputType{
+raw: [csv]
+
++get_reference_data() : dict
++get()
++get_keyword(col_name): []
+update_prev_result(step_results):
+}
+
+class InputTransaction{
+label_name: set
+}
+
+class InputTwoLayer{
+ref_data: dict
++ get_freq(key_name: str): int
++ get_sum_of_col(col_name:str, key_name:str) : float
+set_reference_data(ref_data: dict)
+
+}
+@enduml

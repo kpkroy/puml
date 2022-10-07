@@ -1,0 +1,25 @@
+@startuml
+Entity ServiceKeywordMapperTable{
+process_name: str
+service_name: str
+
+keyword_mapper: str
+keyword_col_name: str
+mapper_min_match: int
+}
+
+Entity TesterValModifier{
+process_name: str
+service_name: str
+
+tester_value_modifier: float
+}
+
+Entity ServiceOrder{
+process_name: str
+service_name: str
+
+service_order: int
+service_order_sub: int
+}
+@enduml

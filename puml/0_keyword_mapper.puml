@@ -1,0 +1,87 @@
+@startuml
+class MapperExact implements Mapper
+class MapperRegex implements Mapper
+class MapperTokenized implements Mapper
+class MapperFuzzy extends MapperTokenized
+class MapperFuzzyBoth extends MapperFuzzy
+
+MapperTokenized o-- KeywordTokenizer : has one >
+MapperFuzzy o-- KeywordFuzzy : has one >
+KeywordTokenizer o-- KeywordCleanser: has one >
+KeywordTokenizer o-- KeywordSplitter: has one >
+
+
+class Mapper {
+keyword_mapper: dict
++ match(keyword_: str): [str]
+update_mapper(mapper: dict)
+}
+
+class MapperExact{
++ match(keyword_: str)
+}
+
+class MapperRegex{
++ match(keyword_: str)
+}
+
+class MapperTokenized{
+keyword_shorter_min_len: int
+keyword_shorter: dict
+cached: dict
+tokenizer: KeywordTokenizer
+
++ match(keyword_: str)
+- create_shorter_keywords(min_len: int)
+- match_tokenized(keyword_: str)
+- loop_keyword_list(keyword_list, findall, use_shorter)
+}
+
+class MapperFuzzy{
+fuzzy_min_len: int
+fuzzy: KeywordFuzzy
+
++ match(keyword_: str)
+- match_fuzzy(keyword_: str)
+}
+
+class MapperFuzzyBoth{
+- match_fuzzy(keyword_: str))
+}
+
+class KeywordTokenizer{
+cleanser: KeywordCleanser
+str_splitter: KeywordSplitter
+
++ create_tokenized_keywords(keyword_): [str]
+cleanse_keyword(keyword_): [str]
+split_keyword(keyword_): [str]
+}
+
+class KeywordFuzzy{
+fuzzy_min_len: int
+cleanser: KeywordCleanser
+str_splitter: KeywordSplitter
+
++ create_fuzzy_keywords(keyword_): [str]
+- get_keywords(keyword_): [str]
+- tokenize_forward(keyword_): [str]
+- tokenize_backward(keyword_): [str]
+}
+
+class KeywordCleanser{
+reserved_chars: [str]
+
+remove_parenthesis(keyword_)
+remove_reserved_chars(keyword_)
+remove_special_chars(keyword_)
+remove_empty_space(keyword_)
+}
+
+class KeywordSplitter{
+reserved_splitters: [str]
+min_split_len: (min_len: int)
+get_special_char_split(keyword_): [str]
+}
+
+@enduml

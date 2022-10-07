@@ -1,0 +1,30 @@
+@startuml
+
+Entity ServiceLabelerMap{
+labeler_id : str
+service_name: str
+}
+
+Entity Labeler{
+labeler_id: str
+result_name: str
+keyword: [str]
+}
+
+Entity TesterLabelerMap{
+labeler_id: str
+test_id: str
+}
+Entity Tester{
+test_id: str
+test_operand: str
+test_col_name: str
+regex : str
+greater_eq: float
+greater: float
+lesser_eq: float
+lesser: float
+numerator_keyword: [str]
+denom_keyword: [str]
+}
+@enduml

@@ -1,0 +1,79 @@
+@startuml
+TestManager o-- TestCreator : > has one
+TestManager o-- Tester: > has many
+TestCreator -- Tester: > creates Tester
+class TestExcludeRegex implements Tester
+class TestRange implements Tester
+class TestSum implements Tester
+class TestSumRel implements Tester
+class TestFreq implements Tester
+class TestFreqRel implements Tester
+
+class TestManager{
+tester_id: dict
+testers: dict
+test_creator: TestCreator
+
++test(labeler_id: str, input_data: InputType): bool
+-update_tester_mapper(labeler_tester_id: dict)
+-update_tester_requirement(testers: dict{str: TesterType})
+-get_tester(tester_id: str): TesterType
+}
+
+
+class TestCreator{
+value_modifier: float
+tester_types: dict{str: TesterType}
++ create(): Tester
+}
+
+class Tester{
+test_operand: str
+greater: float
+lesser: float
+greater_eq: float
+lesser_eq: float
+
+test_col_name: str
+regex: str
+numerator_keyword: [str]
+denom_keyword: [str]
+
++ test(input_data: InputType): bool
+}
+
+class TestRange{
+test_col_name: str
+test(input_data: InputTransaction): bool
+}
+class TestExcludeRegex{
+test_col_name: str
+regex: str
+test(input_data: InputTransaction): bool
+}
+
+class TestFreqRel{
+numerator_keyword: [str]
+denom_keyword: [str]
+test(input_data: InputTwoLayer): bool
+}
+
+class TestFreq{
+numerator_keyword: [str]
+test(input_data: InputTwoLayer): bool
+}
+
+class TestSumRel{
+numerator_keyword: [str]
+denom_keyword: [str]
+test_col_name: str
+test(input_data: InputTwoLayer): bool
+}
+
+class TestSum{
+numerator_keyword: [str]
+test_col_name: str
+test(input_data: InputTwoLayer): bool
+}
+
+@enduml

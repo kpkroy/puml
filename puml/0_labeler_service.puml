@@ -1,0 +1,68 @@
+
+@startuml
+ServiceConfigWrapped --o ServiceConfig : has many >
+ComponentInfoWrapped --o ComponentInfo: has many >
+ServiceConfig --> LabelerService : [ServiceConfigWrapped]
+ComponentInfo --> LabelerService : [ComponentInfoWrapped]
+
+TesterManager --o LabelerService: has one <
+KeywordMapper --o LabelerService: has one <
+
+
+class LabelerService{
+keyword_col: str
+keyword_mapper: KeywordMapper
+tester: TesterManager
+result_mapper: dict
+
++ match(input_data: InputType): dict
+update_keyword_mapper(keyword_labeler: dict)
+update_tester_mapper(labeler_tester_id: dict)
+update_testers(requirement_info: dict)
+update_result_mapper(result_mapper: dict)
+}
+
+class ServiceConfig{
+raw_csv: [dict]
++ generate_wrapped(process_name: str): [ServiceConfigWrapped]
+}
+
+class ServiceConfigWrapped{
+service_name: str
+keyword_col_name :str
+keyword_mapper :str
+mapper_min_match: int
+service_order: int
+service_order_sub: int
+test_value_modifier: float
+}
+
+class ComponentInfo{
+raw_csv:[dict]
++ generate_wrapped(service_name: str): [ComponentInfoWrapped]
+}
+
+class ComponentInfoWrapped{
+service_name: str
+keyword_mapper: dict
+tester_mapper: dict
+result_mapper: dict
+tester: dict
+}
+
+class KeywordMapper{
+keyword_mapper: dict
++ match(keyword_: str): [str]
+- update_keyword_mapper(mapper: dict)
+}
+
+class TesterManager{
+tester_id: dict
+testers: dict
+test_creator: TestCreator
+
++test(labeler_id: str, input_data: InputType): bool
+}
+
+@enduml
+

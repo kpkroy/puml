@@ -1,0 +1,34 @@
+
+
+
+@startuml
+LabelerProcess o-- LabelerService : has many in labeler_service >
+LabelerProcess <-- InputType
+
+note left of LabelerProcess::labeler_service
+  {service_name: LabelerService}
+end note
+note left of LabelerProcess::labeler_service_order
+  {service_order: service_name}
+end note
+
+
+class LabelerProcess{
+labeler_service: dict
+labeler_service_order: dict
+
++ run(input_data: InputType): set():
+}
+
+
+class InputType{
+raw: [csv]
+
++get_reference_data() : dict
++get()
++get_keyword(col_name): []
+update_prev_result(step_results):
+}
+
+
+@enduml
