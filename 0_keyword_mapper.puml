@@ -2,8 +2,9 @@
 class MapperExact implements Mapper
 class MapperRegex implements Mapper
 class MapperTokenized implements Mapper
-class MapperFuzzy extends MapperTokenized
+class MapperFuzzy extends MapperTokenizedInsensitive
 class MapperFuzzyBoth extends MapperFuzzy
+class MapperTokenizedInsensitive extends MapperTokenized
 
 MapperTokenized o-- KeywordTokenizer : has one >
 MapperFuzzy o-- KeywordFuzzy : has one >
@@ -18,6 +19,10 @@ update_mapper(mapper: dict)
 }
 
 class MapperExact{
++ match(keyword_: str)
+}
+
+class MapperTokenizedInsensitive{
 + match(keyword_: str)
 }
 
